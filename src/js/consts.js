@@ -19,7 +19,8 @@ module.exports = {
         'TEXT',
         'ICON',
         'FILTER',
-        'SHAPE'
+        'SHAPE',
+        'LAYER'
     ),
 
     /**
@@ -45,7 +46,11 @@ module.exports = {
         'ADD_IMAGE_OBJECT': 'addImageObject',
         'RESIZE_CANVAS_DIMENSION': 'resizeCanvasDimension',
         'SET_OBJECT_PROPERTIES': 'setObjectProperties',
-        'SET_OBJECT_POSITION': 'setObjectPosition'
+        'SET_OBJECT_POSITION': 'setObjectPosition',
+        'BRING_FORWARD': 'bringObjectForward',
+        'BRING_TO_FRONT': 'bringObjectToFront',
+        'SEND_BACKWARD': 'sendObjectBackward',
+        'SEND_TO_BACK': 'sendObjectToBack'
     },
 
     /**

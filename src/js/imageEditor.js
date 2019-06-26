@@ -1503,6 +1503,22 @@ class ImageEditor {
     getFabricInstance() {
         return this._graphics.getFabricInstance();
     }
+
+    bringObjectForward(id) {
+        return this.execute(commands.BRING_FORWARD, id);
+    }
+
+    bringObjectToFront(id) {
+        return this.execute(commands.BRING_TO_FRONT, id);
+    }
+
+    sendObjectBackward(id) {
+        return this.execute(commands.SEND_BACKWARD, id);
+    }
+
+    sendObjectToBack(id) {
+        return this.execute(commands.SEND_TO_BACK, id);
+    }
 }
 
 action.mixin(ImageEditor);
