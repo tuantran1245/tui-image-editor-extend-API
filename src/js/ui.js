@@ -69,10 +69,10 @@ class Ui {
             'reset': this._menuElement.querySelector('#tie-btn-reset'),
             'delete': this._menuElement.querySelector('#tie-btn-delete'),
             'deleteAll': this._menuElement.querySelector('#tie-btn-delete-all'),
-            'bring-forward': this._menuElement.querySelector('#tie-btn-bring-forward'),
-            'bring-to-front': this._menuElement.querySelector('#tie-btn-bring-to-front'),
-            'sent-backward': this._menuElement.querySelector('#tie-btn-send-backward'),
-            'sent-to-back': this._menuElement.querySelector('#tie-btn-send-to-back'),
+            'bringForward': this._menuElement.querySelector('#tie-btn-bring-forward'),
+            'bringToFront': this._menuElement.querySelector('#tie-btn-bring-to-front'),
+            'sentBackward': this._menuElement.querySelector('#tie-btn-send-backward'),
+            'sentToBack': this._menuElement.querySelector('#tie-btn-send-to-back'),
             'download': this._selectedElement.querySelectorAll('.tui-image-editor-download-btn'),
             'load': this._selectedElement.querySelectorAll('.tui-image-editor-load-btn')
         };
@@ -232,33 +232,33 @@ class Ui {
 
     changeBringForwardButtonEnabled(enableStatus) {
         if (enableStatus) {
-            this._els['bring-forward'].classList.add('enabled');
+            this._els.bringForward.classList.add('enabled');
         } else {
-            this._els['bring-forward'].classList.remove('enabled');
+            this._els.bringForward.classList.remove('enabled');
         }
     }
 
     changeBringToFrontButtonEnabled(enableStatus) {
         if (enableStatus) {
-            this._els['bring-to-front'].classList.add('enabled');
+            this._els.bringToFront.classList.add('enabled');
         } else {
-            this._els['bring-to-front'].classList.remove('enabled');
+            this._els.bringToFront.classList.remove('enabled');
         }
     }
 
     changeSendBackwardButtonEnabled(enableStatus) {
         if (enableStatus) {
-            this._els['send-backward'].classList.add('enabled');
+            this._els.sentBackward.classList.add('enabled');
         } else {
-            this._els['send-backward'].classList.remove('enabled');
+            this._els.sentBackward.classList.remove('enabled');
         }
     }
 
     changeSendToBackButtonEnabled(enableStatus) {
         if (enableStatus) {
-            this._els['send-to-back'].classList.add('enabled');
+            this._els.sentToBack.classList.add('enabled');
         } else {
-            this._els['send-to-back'].classList.remove('enabled');
+            this._els.sentToBack.classList.remove('enabled');
         }
     }
 
