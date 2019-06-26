@@ -109,7 +109,28 @@ export default {
                     w = window.open();
                     w.document.body.innerHTML = `<img src='${dataURL}'>`;
                 }
+            },
+            bringForward: () => {
+                if (this.activeObjectId) {
+                    this.bringObjectForward(this.activeObjectId);
+                }
+            },
+            bringToFont: () => {
+                if (this.activeObjectId) {
+                    this.bringObjectToFront(this.activeObjectId);
+                }
+            },
+            sendBackward: () => {
+                if (this.activeObjectId) {
+                    this.sendObjectBackward(this.activeObjectId);
+                }
+            },
+            sendToBack: () => {
+                if (this.activeObjectId) {
+                    this.sendObjectToBack(this.activeObjectId);
+                }
             }
+
         }, this._commonAction());
     },
 
@@ -407,6 +428,10 @@ export default {
 
                 this.ui.changeDeleteButtonEnabled(true);
                 this.ui.changeDeleteAllButtonEnabled(true);
+                this.ui.changeBringForwardButtonEnabled(true);
+                this.ui.changeBringToFrontButtonEnabled(true);
+                this.ui.changeSendBackwardButtonEnabled(true);
+                this.ui.changeSendToBackButtonEnabled(true);
 
                 if (obj.type === 'cropzone') {
                     this.ui.crop.changeApplyButtonStatus(true);

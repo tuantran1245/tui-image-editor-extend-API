@@ -69,6 +69,10 @@ class Ui {
             'reset': this._menuElement.querySelector('#tie-btn-reset'),
             'delete': this._menuElement.querySelector('#tie-btn-delete'),
             'deleteAll': this._menuElement.querySelector('#tie-btn-delete-all'),
+            'bring-forward': this._menuElement.querySelector('#tie-btn-bring-forward'),
+            'bring-to-front': this._menuElement.querySelector('#tie-btn-bring-to-front'),
+            'sent-backward': this._menuElement.querySelector('#tie-btn-send-backward'),
+            'sent-to-back': this._menuElement.querySelector('#tie-btn-send-to-back'),
             'download': this._selectedElement.querySelectorAll('.tui-image-editor-download-btn'),
             'load': this._selectedElement.querySelectorAll('.tui-image-editor-load-btn')
         };
@@ -225,6 +229,39 @@ class Ui {
      * @returns {Object} initialize option
      * @private
      */
+
+    changeBringForwardButtonEnabled(enableStatus) {
+        if (enableStatus) {
+            this._els['bring-forward'].classList.add('enabled');
+        } else {
+            this._els['bring-forward'].classList.remove('enabled');
+        }
+    }
+
+    changeBringToFrontButtonEnabled(enableStatus) {
+        if (enableStatus) {
+            this._els['bring-to-front'].classList.add('enabled');
+        } else {
+            this._els['bring-to-front'].classList.remove('enabled');
+        }
+    }
+
+    changeSendBackwardButtonEnabled(enableStatus) {
+        if (enableStatus) {
+            this._els['send-backward'].classList.add('enabled');
+        } else {
+            this._els['send-backward'].classList.remove('enabled');
+        }
+    }
+
+    changeSendToBackButtonEnabled(enableStatus) {
+        if (enableStatus) {
+            this._els['send-to-back'].classList.add('enabled');
+        } else {
+            this._els['send-to-back'].classList.remove('enabled');
+        }
+    }
+
     _initializeOption(options) {
         return snippet.extend({
             loadImage: {
