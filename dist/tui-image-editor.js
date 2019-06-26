@@ -68,9 +68,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _imageEditor2 = _interopRequireDefault(_imageEditor);
 
-	__webpack_require__(130);
-
-	__webpack_require__(132);
+	__webpack_require__(131);
 
 	__webpack_require__(133);
 
@@ -107,6 +105,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(149);
 
 	__webpack_require__(150);
+
+	__webpack_require__(151);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2368,6 +2368,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'getFabricInstance',
 	        value: function getFabricInstance() {
 	            return this._graphics.getFabricInstance();
+	        }
+	    }, {
+	        key: 'bringObjectForward',
+	        value: function bringObjectForward(id) {
+	            return this.execute(commands.BRING_FORWARD, id);
+	        }
+	    }, {
+	        key: 'bringObjectToFront',
+	        value: function bringObjectToFront(id) {
+	            return this.execute(commands.BRING_TO_FRONT, id);
+	        }
+	    }, {
+	        key: 'sendObjectBackward',
+	        value: function sendObjectBackward(id) {
+	            return this.execute(commands.SEND_BACKWARD, id);
+	        }
+	    }, {
+	        key: 'sendObjectToBack',
+	        value: function sendObjectToBack(id) {
+	            return this.execute(commands.SEND_TO_BACK, id);
 	        }
 	    }]);
 
@@ -4682,7 +4702,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Component names
 	     * @type {Object.<string, string>}
 	     */
-	    componentNames: _util2.default.keyMirror('IMAGE_LOADER', 'CROPPER', 'FLIP', 'ROTATION', 'FREE_DRAWING', 'LINE', 'TEXT', 'ICON', 'FILTER', 'SHAPE'),
+	    componentNames: _util2.default.keyMirror('IMAGE_LOADER', 'CROPPER', 'FLIP', 'ROTATION', 'FREE_DRAWING', 'LINE', 'TEXT', 'ICON', 'FILTER', 'SHAPE', 'LAYER'),
 
 	    /**
 	     * Command names
@@ -4707,7 +4727,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'ADD_IMAGE_OBJECT': 'addImageObject',
 	        'RESIZE_CANVAS_DIMENSION': 'resizeCanvasDimension',
 	        'SET_OBJECT_PROPERTIES': 'setObjectProperties',
-	        'SET_OBJECT_POSITION': 'setObjectPosition'
+	        'SET_OBJECT_POSITION': 'setObjectPosition',
+	        'BRING_FORWARD': 'bringObjectForward',
+	        'BRING_TO_FRONT': 'bringObjectToFront',
+	        'SEND_BACKWARD': 'sendObjectBackward',
+	        'SEND_TO_BACK': 'sendObjectToBack'
 	    },
 
 	    /**
@@ -5681,7 +5705,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        disabled = _ref$iconStyle.disabled,
 	        loadButtonStyle = _ref.loadButtonStyle,
 	        downloadButtonStyle = _ref.downloadButtonStyle;
-	    return "\n    <div class=\"tui-image-editor-controls\">\n        <div class=\"tui-image-editor-controls-logo\">\n            <img src=\"" + biImage + "\" />\n        </div>\n        <ul class=\"tui-image-editor-menu\">\n            <li id=\"tie-btn-undo\" class=\"tui-image-editor-item\" title=\"Undo\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-undo\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-undo\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-undo\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-redo\" class=\"tui-image-editor-item\" title=\"Redo\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-redo\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-redo\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-redo\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-reset\" class=\"tui-image-editor-item\" title=\"Reset\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-reset\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-reset\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-reset\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n            <li id=\"tie-btn-delete\" class=\"tui-image-editor-item\" title=\"Delete\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-delete\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-delete\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-delete\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Delete-all\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-delete-all\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-delete-all\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-delete-all\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n        </ul>\n\n        <div class=\"tui-image-editor-controls-buttons\">\n            <button style=\"" + loadButtonStyle + "\">\n                T\u1EA3i \u1EA3nh l\xEAn\n                <input type=\"file\" class=\"tui-image-editor-load-btn\" />\n            </button>\n            <button class=\"tui-image-editor-download-btn\" style=\"" + downloadButtonStyle + "\">\n                T\u1EA3i \u1EA3nh v\u1EC1\n            </button>\n        </div>\n    </div>\n";
+	    return "\n    <div class=\"tui-image-editor-controls\">\n        <div class=\"tui-image-editor-controls-logo\">\n            <img src=\"" + biImage + "\" />\n        </div>\n        <ul class=\"tui-image-editor-menu\">\n            <li id=\"tie-btn-undo\" class=\"tui-image-editor-item\" title=\"Undo\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-undo\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-undo\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-undo\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-redo\" class=\"tui-image-editor-item\" title=\"Redo\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-redo\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-redo\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-redo\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-reset\" class=\"tui-image-editor-item\" title=\"Reset\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-reset\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-reset\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-reset\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n            <li id=\"tie-btn-delete\" class=\"tui-image-editor-item\" title=\"Delete\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-delete\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-delete\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-delete\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Delete All\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-delete-all\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-delete-all\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-delete-all\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Bring Forward\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-bring-forward\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-bring-forward\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-bring-forward\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Bring To Front\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-bring-to-front\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-bring-to-front\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-bring-to-front\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Send Backward\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-send-backward\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-send-backward\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-send-backward\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Send To Back\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-send-to-back\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-send-to-back\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-send-to-back\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n        </ul>\n\n        <div class=\"tui-image-editor-controls-buttons\">\n            <button style=\"" + loadButtonStyle + "\">\n                T\u1EA3i \u1EA3nh l\xEAn\n                <input type=\"file\" class=\"tui-image-editor-load-btn\" />\n            </button>\n            <button class=\"tui-image-editor-download-btn\" style=\"" + downloadButtonStyle + "\">\n                T\u1EA3i \u1EA3nh v\u1EC1\n            </button>\n        </div>\n    </div>\n";
 	};
 
 /***/ }),
@@ -13726,23 +13750,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _shape2 = _interopRequireDefault(_shape);
 
-	var _cropper3 = __webpack_require__(124);
+	var _layer = __webpack_require__(124);
+
+	var _layer2 = _interopRequireDefault(_layer);
+
+	var _cropper3 = __webpack_require__(125);
 
 	var _cropper4 = _interopRequireDefault(_cropper3);
 
-	var _freeDrawing3 = __webpack_require__(126);
+	var _freeDrawing3 = __webpack_require__(127);
 
 	var _freeDrawing4 = _interopRequireDefault(_freeDrawing3);
 
-	var _lineDrawing = __webpack_require__(127);
+	var _lineDrawing = __webpack_require__(128);
 
 	var _lineDrawing2 = _interopRequireDefault(_lineDrawing);
 
-	var _shape3 = __webpack_require__(128);
+	var _shape3 = __webpack_require__(129);
 
 	var _shape4 = _interopRequireDefault(_shape3);
 
-	var _text3 = __webpack_require__(129);
+	var _text3 = __webpack_require__(130);
 
 	var _text4 = _interopRequireDefault(_text3);
 
@@ -14735,6 +14763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this._register(this._componentMap, new _icon2.default(this));
 	            this._register(this._componentMap, new _filter2.default(this));
 	            this._register(this._componentMap, new _shape2.default(this));
+	            this._register(this._componentMap, new _layer2.default(this));
 	        }
 
 	        /**
@@ -15064,6 +15093,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'getFabricInstance',
 	        value: function getFabricInstance() {
 	            return _fabric2.default;
+	        }
+	    }, {
+	        key: 'bringObjectForward',
+	        value: function bringObjectForward(id) {
+	            var target = this.getObject(id);
+	            this._canvas.bringForward(target);
+	        }
+	    }, {
+	        key: 'bringObjectToFront',
+	        value: function bringObjectToFront(id) {
+	            var target = this.getObject(id);
+	            this._canvas.bringToFront(target);
+	        }
+	    }, {
+	        key: 'sendObjectBackward',
+	        value: function sendObjectBackward(id) {
+	            var target = this.getObject(id);
+	            this._canvas.sendBackwards(target);
+	        }
+	    }, {
+	        key: 'sendObjectToBack',
+	        value: function sendObjectToBack(id) {
+	            var target = this.getObject(id);
+	            this._canvas.sendToBack(target);
 	        }
 	    }]);
 
@@ -19467,9 +19520,45 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _component = __webpack_require__(107);
+
+	var _component2 = _interopRequireDefault(_component);
+
+	var _consts = __webpack_require__(73);
+
+	var _consts2 = _interopRequireDefault(_consts);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Layer = function (_Component) {
+	    _inherits(Layer, _Component);
+
+	    function Layer(graphics) {
+	        _classCallCheck(this, Layer);
+
+	        return _possibleConstructorReturn(this, (Layer.__proto__ || Object.getPrototypeOf(Layer)).call(this, _consts2.default.componentNames.LAYER, graphics));
+	    }
+
+	    return Layer;
+	}(_component2.default);
+
+	module.exports = Layer;
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _drawingMode = __webpack_require__(125);
+	var _drawingMode = __webpack_require__(126);
 
 	var _drawingMode2 = _interopRequireDefault(_drawingMode);
 
@@ -19542,7 +19631,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = CropperDrawingMode;
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19624,14 +19713,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = DrawingMode;
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _drawingMode = __webpack_require__(125);
+	var _drawingMode = __webpack_require__(126);
 
 	var _drawingMode2 = _interopRequireDefault(_drawingMode);
 
@@ -19705,14 +19794,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = FreeDrawingMode;
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _drawingMode = __webpack_require__(125);
+	var _drawingMode = __webpack_require__(126);
 
 	var _drawingMode2 = _interopRequireDefault(_drawingMode);
 
@@ -19786,14 +19875,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = LineDrawingMode;
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _drawingMode = __webpack_require__(125);
+	var _drawingMode = __webpack_require__(126);
 
 	var _drawingMode2 = _interopRequireDefault(_drawingMode);
 
@@ -19866,14 +19955,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ShapeDrawingMode;
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _drawingMode = __webpack_require__(125);
+	var _drawingMode = __webpack_require__(126);
 
 	var _drawingMode2 = _interopRequireDefault(_drawingMode);
 
@@ -19946,14 +20035,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = TextDrawingMode;
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 131 */,
-/* 132 */
+/* 132 */,
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20022,7 +20111,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20081,7 +20170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20148,7 +20237,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20224,7 +20313,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20299,7 +20388,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20391,7 +20480,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20470,7 +20559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20562,7 +20651,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20635,7 +20724,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20724,7 +20813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20782,7 +20871,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20839,7 +20928,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20927,7 +21016,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20987,7 +21076,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21050,7 +21139,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21115,7 +21204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21175,7 +21264,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21262,7 +21351,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
