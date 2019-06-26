@@ -28,14 +28,14 @@ export default ({biImage, iconStyle: {normal, hover, disabled}, loadButtonStyle,
             <li class="tui-image-editor-item">
                 <div class="tui-image-editor-icpartition"></div>
             </li>
-            <li id="tie-btn-delete" class="tui-image-editor-item" title="Delete">
+            <li id="tie-btn-delete" class="tui-image-editor-item" title="Xóa">
                 <svg class="svg_ic-menu">
                     <use xlink:href="${normal.path}#${normal.name}-ic-delete" class="enabled"/>
                     <use xlink:href="${disabled.path}#${disabled.name}-ic-delete" class="normal"/>
                     <use xlink:href="${hover.path}#${hover.name}-ic-delete" class="hover"/>
                 </svg>
             </li>
-            <li id="tie-btn-delete-all" class="tui-image-editor-item" title="Delete-all">
+            <li id="tie-btn-delete-all" class="tui-image-editor-item" title="xóa hết">
                 <svg class="svg_ic-menu">
                     <use xlink:href="${normal.path}#${normal.name}-ic-delete-all" class="enabled"/>
                     <use xlink:href="${disabled.path}#${disabled.name}-ic-delete-all" class="normal"/>
