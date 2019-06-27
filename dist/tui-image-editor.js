@@ -2372,22 +2372,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'bringObjectForward',
 	        value: function bringObjectForward(id) {
-	            return this.execute(commands.BRING_FORWARD, id);
+	            this._graphics.bringObjectForward(id);
 	        }
 	    }, {
 	        key: 'bringObjectToFront',
 	        value: function bringObjectToFront(id) {
-	            return this.execute(commands.BRING_TO_FRONT, id);
+	            this._graphics.bringObjectToFront(id);
 	        }
 	    }, {
 	        key: 'sendObjectBackward',
 	        value: function sendObjectBackward(id) {
-	            return this.execute(commands.SEND_BACKWARD, id);
+	            this._graphics.sendObjectBackward(id);
 	        }
 	    }, {
 	        key: 'sendObjectToBack',
 	        value: function sendObjectToBack(id) {
-	            return this.execute(commands.SEND_TO_BACK, id);
+	            this._graphics.sendObjectToBack(id);
 	        }
 	    }]);
 
@@ -5032,22 +5032,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	            'reset': this._menuElement.querySelector('#tie-btn-reset'),
 	            'delete': this._menuElement.querySelector('#tie-btn-delete'),
 	            'deleteAll': this._menuElement.querySelector('#tie-btn-delete-all'),
+	            'bringForward': this._menuElement.querySelector('#tie-btn-bring-forward'),
+	            'bringToFront': this._menuElement.querySelector('#tie-btn-bring-to-front'),
+	            'sendBackwards': this._menuElement.querySelector('#tie-btn-send-backward'),
+	            'sendToBack': this._menuElement.querySelector('#tie-btn-send-to-back'),
 	            'download': this._selectedElement.querySelectorAll('.tui-image-editor-download-btn'),
 	            'load': this._selectedElement.querySelectorAll('.tui-image-editor-load-btn')
 	        };
 
 	        this._makeSubMenu();
+	        this.translateMainMenuButtonTitle();
 	    }
 
-	    /**
-	     * Set Default Selection for includeUI
-	     * @param {Object} option - imageEditor options
-	     * @returns {Object} - extends selectionStyle option
-	     * @ignore
-	     */
-
-
 	    _createClass(Ui, [{
+	        key: 'translateMainMenuButtonTitle',
+	        value: function translateMainMenuButtonTitle() {
+	            this._els.undo.title = 'Hồi Lại';
+	            this._els.redo.title = 'Làm Lại';
+	            this._els.reset.title = 'Đặt Lại';
+	            this._els['delete'].title = 'Xóa';
+	            this._els.deleteAll.title = 'Xóa Hết';
+	            this._els.bringForward.title = 'Đưa Lên Trên';
+	            this._els.bringToFront.title = 'Lên Trên Cùng';
+	            this._els.sendBackwards.title = 'Đưa Xuống Dưới';
+	            this._els.sendToBack.title = 'Xuống Dưới cùng';
+	        }
+
+	        /**
+	         * Set Default Selection for includeUI
+	         * @param {Object} option - imageEditor options
+	         * @returns {Object} - extends selectionStyle option
+	         * @ignore
+	         */
+
+	    }, {
 	        key: 'setUiDefaultSelectionStyle',
 	        value: function setUiDefaultSelectionStyle(option) {
 	            return _tuiCodeSnippet2.default.extend({
@@ -5221,6 +5239,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	         */
 
 	    }, {
+	        key: 'changeBringForwardButtonEnabled',
+	        value: function changeBringForwardButtonEnabled(enableStatus) {
+	            if (enableStatus) {
+	                this._els.bringForward.classList.add('enabled');
+	            } else {
+	                this._els.bringForward.classList.remove('enabled');
+	            }
+	        }
+	    }, {
+	        key: 'changeBringToFrontButtonEnabled',
+	        value: function changeBringToFrontButtonEnabled(enableStatus) {
+	            if (enableStatus) {
+	                this._els.bringToFront.classList.add('enabled');
+	            } else {
+	                this._els.bringToFront.classList.remove('enabled');
+	            }
+	        }
+	    }, {
+	        key: 'changeSendBackwardButtonEnabled',
+	        value: function changeSendBackwardButtonEnabled(enableStatus) {
+	            if (enableStatus) {
+	                this._els.sendBackwards.classList.add('enabled');
+	            } else {
+	                this._els.sendBackwards.classList.remove('enabled');
+	            }
+	        }
+	    }, {
+	        key: 'changeSendToBackButtonEnabled',
+	        value: function changeSendToBackButtonEnabled(enableStatus) {
+	            if (enableStatus) {
+	                this._els.sendToBack.classList.add('enabled');
+	            } else {
+	                this._els.sendToBack.classList.remove('enabled');
+	            }
+	        }
+	    }, {
 	        key: '_initializeOption',
 	        value: function _initializeOption(options) {
 	            return _tuiCodeSnippet2.default.extend({
@@ -5271,6 +5325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var SubComponentClass = SUB_UI_COMPONENT[menuName.replace(/^[a-z]/, function ($0) {
 	                    return $0.toUpperCase();
 	                })];
+	                // console.log('menu name: ', menuName);
 
 	                // make menu element
 	                _this._makeMenuElement(menuName);
@@ -5342,6 +5397,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_makeMenuElement',
 	        value: function _makeMenuElement(menuName) {
+	            // console.log('menu name:', menuName);
 	            var btnElement = document.createElement('li');
 
 	            var _theme$getStyle = this.theme.getStyle('menu.icon'),
@@ -5353,12 +5409,38 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            btnElement.id = 'tie-btn-' + menuName;
 	            btnElement.className = 'tui-image-editor-item normal';
-	            btnElement.title = menuName.replace(/^[a-z]/g, function ($0) {
+	            btnElement.title = this.translateSubMenuButtonTitle(menuName.replace(/^[a-z]/g, function ($0) {
 	                return $0.toUpperCase();
-	            });
+	            }));
 	            btnElement.innerHTML = menuItemHtml;
 
 	            this._menuElement.appendChild(btnElement);
+	        }
+	    }, {
+	        key: 'translateSubMenuButtonTitle',
+	        value: function translateSubMenuButtonTitle(title) {
+	            switch (title) {
+	                case 'Crop':
+	                    return 'Cắt Ảnh';
+	                case 'Flip':
+	                    return 'Lật Ảnh';
+	                case 'Rotate':
+	                    return 'Xoay Ảnh';
+	                case 'Draw':
+	                    return 'Vẽ';
+	                case 'Shape':
+	                    return 'Vẽ Hình Khối';
+	                case 'Icon':
+	                    return 'Vẽ Biểu Tượng';
+	                case 'Text':
+	                    return 'Văn Bản';
+	                case 'Mask':
+	                    return 'Mặt Nạ';
+	                case 'Filter':
+	                    return 'Bộ Lọc Màu';
+	                default:
+	                    return title;
+	            }
 	        }
 
 	        /**
@@ -5372,6 +5454,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _addHelpActionEvent(helpName) {
 	            var _this2 = this;
 
+	            // console.log('ui._addHelpActionEvent: ', helpName);
+	            // console.log('menu element: ', this._els[helpName]);
 	            this._els[helpName].addEventListener('click', function () {
 	                _this2._actions.main[helpName]();
 	            });
@@ -5470,6 +5554,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this._addHelpActionEvent('reset');
 	            this._addHelpActionEvent('delete');
 	            this._addHelpActionEvent('deleteAll');
+	            this._addHelpActionEvent('bringForward');
+	            this._addHelpActionEvent('bringToFront');
+	            this._addHelpActionEvent('sendBackwards');
+	            this._addHelpActionEvent('sendToBack');
 
 	            this._addDownloadEvent();
 
@@ -5705,7 +5793,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        disabled = _ref$iconStyle.disabled,
 	        loadButtonStyle = _ref.loadButtonStyle,
 	        downloadButtonStyle = _ref.downloadButtonStyle;
-	    return "\n    <div class=\"tui-image-editor-controls\">\n        <div class=\"tui-image-editor-controls-logo\">\n            <img src=\"" + biImage + "\" />\n        </div>\n        <ul class=\"tui-image-editor-menu\">\n            <li id=\"tie-btn-undo\" class=\"tui-image-editor-item\" title=\"Undo\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-undo\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-undo\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-undo\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-redo\" class=\"tui-image-editor-item\" title=\"Redo\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-redo\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-redo\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-redo\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-reset\" class=\"tui-image-editor-item\" title=\"Reset\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-reset\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-reset\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-reset\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n            <li id=\"tie-btn-delete\" class=\"tui-image-editor-item\" title=\"Delete\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-delete\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-delete\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-delete\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Delete All\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-delete-all\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-delete-all\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-delete-all\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Bring Forward\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-bring-forward\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-bring-forward\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-bring-forward\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Bring To Front\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-bring-to-front\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-bring-to-front\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-bring-to-front\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Send Backward\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-send-backward\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-send-backward\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-send-backward\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Send To Back\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-send-to-back\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-send-to-back\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-send-to-back\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n        </ul>\n\n        <div class=\"tui-image-editor-controls-buttons\">\n            <button style=\"" + loadButtonStyle + "\">\n                T\u1EA3i \u1EA3nh l\xEAn\n                <input type=\"file\" class=\"tui-image-editor-load-btn\" />\n            </button>\n            <button class=\"tui-image-editor-download-btn\" style=\"" + downloadButtonStyle + "\">\n                T\u1EA3i \u1EA3nh v\u1EC1\n            </button>\n        </div>\n    </div>\n";
+	    return "\n    <div class=\"tui-image-editor-controls\">\n        <div class=\"tui-image-editor-controls-logo\">\n            <img src=\"" + biImage + "\" />\n        </div>\n        <ul class=\"tui-image-editor-menu\">\n            <li id=\"tie-btn-undo\" class=\"tui-image-editor-item\" title=\"Undo\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-undo\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-undo\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-undo\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-redo\" class=\"tui-image-editor-item\" title=\"Redo\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-redo\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-redo\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-redo\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-reset\" class=\"tui-image-editor-item\" title=\"Reset\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-reset\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-reset\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-reset\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n            <li id=\"tie-btn-delete\" class=\"tui-image-editor-item\" title=\"Delete\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-delete\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-delete\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-delete\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-delete-all\" class=\"tui-image-editor-item\" title=\"Delete All\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-delete-all\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-delete-all\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-delete-all\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n            <li id=\"tie-btn-bring-forward\" class=\"tui-image-editor-item\" title=\"Bring Forward\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-bring-forward\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-bring-forward\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-bring-forward\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-bring-to-front\" class=\"tui-image-editor-item\" title=\"Bring To Front\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-bring-to-front\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-bring-to-front\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-bring-to-front\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-send-backward\" class=\"tui-image-editor-item\" title=\"Send Backward\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-send-backward\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-send-backward\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-send-backward\" class=\"hover\"/>\n                </svg>\n            </li>\n            <li id=\"tie-btn-send-to-back\" class=\"tui-image-editor-item\" title=\"Send To Back\">\n                <svg class=\"svg_ic-menu\">\n                    <use xlink:href=\"" + normal.path + "#" + normal.name + "-ic-send-to-back\" class=\"enabled\"/>\n                    <use xlink:href=\"" + disabled.path + "#" + disabled.name + "-ic-send-to-back\" class=\"normal\"/>\n                    <use xlink:href=\"" + hover.path + "#" + hover.name + "-ic-send-to-back\" class=\"hover\"/>/>\n                </svg>\n            </li>\n            <li class=\"tui-image-editor-item\">\n                <div class=\"tui-image-editor-icpartition\"></div>\n            </li>\n        </ul>\n\n        <div class=\"tui-image-editor-controls-buttons\">\n            <button style=\"" + loadButtonStyle + "\">\n                T\u1EA3i \u1EA3nh l\xEAn\n                <input type=\"file\" class=\"tui-image-editor-load-btn\" />\n            </button>\n            <button class=\"tui-image-editor-download-btn\" style=\"" + downloadButtonStyle + "\">\n                T\u1EA3i \u1EA3nh v\u1EC1\n            </button>\n        </div>\n    </div>\n";
 	};
 
 /***/ }),
@@ -12079,7 +12167,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    w = window.open();
 	                    w.document.body.innerHTML = '<img src=\'' + dataURL + '\'>';
 	                }
+	            },
+	            bringForward: function bringForward() {
+	                if (_this.activeObjectId) {
+	                    _this.bringObjectForward(_this.activeObjectId);
+	                }
+	            },
+	            bringToFront: function bringToFront() {
+	                if (_this.activeObjectId) {
+	                    _this.bringObjectToFront(_this.activeObjectId);
+	                }
+	            },
+	            sendBackwards: function sendBackwards() {
+	                if (_this.activeObjectId) {
+	                    _this.sendObjectBackward(_this.activeObjectId);
+	                }
+	            },
+	            sendToBack: function sendToBack() {
+	                if (_this.activeObjectId) {
+	                    _this.sendObjectToBack(_this.activeObjectId);
+	                }
 	            }
+
 	        }, this._commonAction());
 	    },
 
@@ -12408,8 +12517,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            objectActivated: function objectActivated(obj) {
 	                _this11.activeObjectId = obj.id;
 
+	                console.log('activated object id: ', _this11.activeObjectId);
+
 	                _this11.ui.changeDeleteButtonEnabled(true);
 	                _this11.ui.changeDeleteAllButtonEnabled(true);
+	                _this11.ui.changeBringForwardButtonEnabled(true);
+	                _this11.ui.changeBringToFrontButtonEnabled(true);
+	                _this11.ui.changeSendBackwardButtonEnabled(true);
+	                _this11.ui.changeSendToBackButtonEnabled(true);
 
 	                if (obj.type === 'cropzone') {
 	                    _this11.ui.crop.changeApplyButtonStatus(true);
@@ -15097,24 +15212,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'bringObjectForward',
 	        value: function bringObjectForward(id) {
+	            console.log('graphics.bringObjectForward called!');
 	            var target = this.getObject(id);
 	            this._canvas.bringForward(target);
 	        }
 	    }, {
 	        key: 'bringObjectToFront',
 	        value: function bringObjectToFront(id) {
+	            console.log('graphics.bringObjectToFront called!');
 	            var target = this.getObject(id);
 	            this._canvas.bringToFront(target);
 	        }
 	    }, {
 	        key: 'sendObjectBackward',
 	        value: function sendObjectBackward(id) {
+	            console.log('graphics.sendObjectBackward called!');
 	            var target = this.getObject(id);
 	            this._canvas.sendBackwards(target);
 	        }
 	    }, {
 	        key: 'sendObjectToBack',
 	        value: function sendObjectToBack(id) {
+	            console.log('graphics.sendObjectToBack called!');
 	            var target = this.getObject(id);
 	            this._canvas.sendToBack(target);
 	        }

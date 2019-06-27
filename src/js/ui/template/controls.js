@@ -47,30 +47,30 @@ export default ({biImage, iconStyle: {normal, hover, disabled}, loadButtonStyle,
             </li>
             <li id="tie-btn-bring-forward" class="tui-image-editor-item" title="Bring Forward">
                 <svg class="svg_ic-menu">
-                    <use xlink:href="${normal.path}#${normal.name}-ic-delete" class="enabled"/>
-                    <use xlink:href="${disabled.path}#${disabled.name}-ic-delete" class="normal"/>
-                    <use xlink:href="${hover.path}#${hover.name}-ic-delete" class="hover"/>
+                    <use xlink:href="${normal.path}#${normal.name}-ic-bring-forward" class="enabled"/>
+                    <use xlink:href="${disabled.path}#${disabled.name}-ic-bring-forward" class="normal"/>
+                    <use xlink:href="${hover.path}#${hover.name}-ic-bring-forward" class="hover"/>
                 </svg>
             </li>
             <li id="tie-btn-bring-to-front" class="tui-image-editor-item" title="Bring To Front">
                 <svg class="svg_ic-menu">
-                    <use xlink:href="${normal.path}#${normal.name}-ic-delete" class="enabled"/>
-                    <use xlink:href="${disabled.path}#${disabled.name}-ic-delete" class="normal"/>
-                    <use xlink:href="${hover.path}#${hover.name}-ic-delete" class="hover"/>
+                    <use xlink:href="${normal.path}#${normal.name}-ic-bring-to-front" class="enabled"/>
+                    <use xlink:href="${disabled.path}#${disabled.name}-ic-bring-to-front" class="normal"/>
+                    <use xlink:href="${hover.path}#${hover.name}-ic-bring-to-front" class="hover"/>
                 </svg>
             </li>
             <li id="tie-btn-send-backward" class="tui-image-editor-item" title="Send Backward">
                 <svg class="svg_ic-menu">
-                    <use xlink:href="${normal.path}#${normal.name}-ic-delete" class="enabled"/>
-                    <use xlink:href="${disabled.path}#${disabled.name}-ic-delete" class="normal"/>
-                    <use xlink:href="${hover.path}#${hover.name}-ic-delete" class="hover"/>
+                    <use xlink:href="${normal.path}#${normal.name}-ic-send-backward" class="enabled"/>
+                    <use xlink:href="${disabled.path}#${disabled.name}-ic-send-backward" class="normal"/>
+                    <use xlink:href="${hover.path}#${hover.name}-ic-send-backward" class="hover"/>
                 </svg>
             </li>
             <li id="tie-btn-send-to-back" class="tui-image-editor-item" title="Send To Back">
                 <svg class="svg_ic-menu">
-                    <use xlink:href="${normal.path}#${normal.name}-ic-delete" class="enabled"/>
-                    <use xlink:href="${disabled.path}#${disabled.name}-ic-delete" class="normal"/>
-                    <use xlink:href="${hover.path}#${hover.name}-ic-delete" class="hover"/>/>
+                    <use xlink:href="${normal.path}#${normal.name}-ic-send-to-back" class="enabled"/>
+                    <use xlink:href="${disabled.path}#${disabled.name}-ic-send-to-back" class="normal"/>
+                    <use xlink:href="${hover.path}#${hover.name}-ic-send-to-back" class="hover"/>/>
                 </svg>
             </li>
             <li class="tui-image-editor-item">
