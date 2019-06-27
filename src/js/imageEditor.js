@@ -1505,19 +1505,19 @@ class ImageEditor {
     }
 
     bringObjectForward(id) {
-        return this.execute(commands.BRING_FORWARD, id);
+        this._graphics.bringObjectForward(id);
     }
 
     bringObjectToFront(id) {
-        return this.execute(commands.BRING_TO_FRONT, id);
+        this._graphics.bringObjectToFront(id);
     }
 
     sendObjectBackward(id) {
-        return this.execute(commands.SEND_BACKWARD, id);
+        this._graphics.sendObjectBackward(id);
     }
 
     sendObjectToBack(id) {
-        return this.execute(commands.SEND_TO_BACK, id);
+        this._graphics.sendObjectToBack(id);
     }
 }
 

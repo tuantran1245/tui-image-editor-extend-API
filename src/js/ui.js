@@ -71,8 +71,8 @@ class Ui {
             'deleteAll': this._menuElement.querySelector('#tie-btn-delete-all'),
             'bringForward': this._menuElement.querySelector('#tie-btn-bring-forward'),
             'bringToFront': this._menuElement.querySelector('#tie-btn-bring-to-front'),
-            'sentBackward': this._menuElement.querySelector('#tie-btn-send-backward'),
-            'sentToBack': this._menuElement.querySelector('#tie-btn-send-to-back'),
+            'sendBackwards': this._menuElement.querySelector('#tie-btn-send-backward'),
+            'sendToBack': this._menuElement.querySelector('#tie-btn-send-to-back'),
             'download': this._selectedElement.querySelectorAll('.tui-image-editor-download-btn'),
             'load': this._selectedElement.querySelectorAll('.tui-image-editor-load-btn')
         };
@@ -248,17 +248,17 @@ class Ui {
 
     changeSendBackwardButtonEnabled(enableStatus) {
         if (enableStatus) {
-            this._els.sentBackward.classList.add('enabled');
+            this._els.sendBackwards.classList.add('enabled');
         } else {
-            this._els.sentBackward.classList.remove('enabled');
+            this._els.sendBackwards.classList.remove('enabled');
         }
     }
 
     changeSendToBackButtonEnabled(enableStatus) {
         if (enableStatus) {
-            this._els.sentToBack.classList.add('enabled');
+            this._els.sendToBack.classList.add('enabled');
         } else {
-            this._els.sentToBack.classList.remove('enabled');
+            this._els.sendToBack.classList.remove('enabled');
         }
     }
 
@@ -389,6 +389,8 @@ class Ui {
      * @private
      */
     _addHelpActionEvent(helpName) {
+        // console.log('ui._addHelpActionEvent: ', helpName);
+        // console.log('menu element: ', this._els[helpName]);
         this._els[helpName].addEventListener('click', () => {
             this._actions.main[helpName]();
         });
@@ -461,6 +463,10 @@ class Ui {
         this._addHelpActionEvent('reset');
         this._addHelpActionEvent('delete');
         this._addHelpActionEvent('deleteAll');
+        this._addHelpActionEvent('bringForward');
+        this._addHelpActionEvent('bringToFront');
+        this._addHelpActionEvent('sendBackwards');
+        this._addHelpActionEvent('sendToBack');
 
         this._addDownloadEvent();
 

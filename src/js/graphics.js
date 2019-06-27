@@ -1108,21 +1108,25 @@ class Graphics {
     }
 
     bringObjectForward(id) {
+        console.log('graphics.bringObjectForward called!');
         const target = this.getObject(id);
         this._canvas.bringForward(target);
     }
 
     bringObjectToFront(id) {
+        console.log('graphics.bringObjectToFront called!');
         const target = this.getObject(id);
         this._canvas.bringToFront(target);
     }
 
     sendObjectBackward(id) {
+        console.log('graphics.sendObjectBackward called!');
         const target = this.getObject(id);
         this._canvas.sendBackwards(target);
     }
 
     sendObjectToBack(id) {
+        console.log('graphics.sendObjectToBack called!');
         const target = this.getObject(id);
         this._canvas.sendToBack(target);
     }

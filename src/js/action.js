@@ -115,12 +115,12 @@ export default {
                     this.bringObjectForward(this.activeObjectId);
                 }
             },
-            bringToFont: () => {
+            bringToFront: () => {
                 if (this.activeObjectId) {
                     this.bringObjectToFront(this.activeObjectId);
                 }
             },
-            sendBackward: () => {
+            sendBackwards: () => {
                 if (this.activeObjectId) {
                     this.sendObjectBackward(this.activeObjectId);
                 }
@@ -425,6 +425,8 @@ export default {
             /* eslint-disable complexity */
             objectActivated: obj => {
                 this.activeObjectId = obj.id;
+
+                console.log('activated object id: ', this.activeObjectId);
 
                 this.ui.changeDeleteButtonEnabled(true);
                 this.ui.changeDeleteAllButtonEnabled(true);
