@@ -78,6 +78,19 @@ class Ui {
         };
 
         this._makeSubMenu();
+        this.translateMainMenuButtonTitle();
+    }
+
+    translateMainMenuButtonTitle() {
+        this._els.undo.title = 'Hồi Lại';
+        this._els.redo.title = 'Làm Lại';
+        this._els.reset.title = 'Đặt Lại';
+        this._els['delete'].title = 'Xóa';
+        this._els.deleteAll.title = 'Xóa Hết';
+        this._els.bringForward.title = 'Đưa Lên Trên';
+        this._els.bringToFront.title = 'Lên Trên Cùng';
+        this._els.sendBackwards.title = 'Đưa Xuống Dưới';
+        this._els.sendToBack.title = 'Xuống Dưới cùng';
     }
 
     /**
@@ -299,6 +312,7 @@ class Ui {
     _makeSubMenu() {
         snippet.forEach(this.options.menu, menuName => {
             const SubComponentClass = SUB_UI_COMPONENT[menuName.replace(/^[a-z]/, $0 => $0.toUpperCase())];
+            // console.log('menu name: ', menuName);
 
             // make menu element
             this._makeMenuElement(menuName);
@@ -365,6 +379,7 @@ class Ui {
      * @private
      */
     _makeMenuElement(menuName) {
+        // console.log('menu name:', menuName);
         const btnElement = document.createElement('li');
         const {normal, active, hover} = this.theme.getStyle('menu.icon');
         const menuItemHtml = `
@@ -377,10 +392,35 @@ class Ui {
 
         btnElement.id = `tie-btn-${menuName}`;
         btnElement.className = 'tui-image-editor-item normal';
-        btnElement.title = menuName.replace(/^[a-z]/g, $0 => $0.toUpperCase());
+        btnElement.title = this.translateSubMenuButtonTitle(menuName.replace(/^[a-z]/g, $0 => $0.toUpperCase()));
         btnElement.innerHTML = menuItemHtml;
 
         this._menuElement.appendChild(btnElement);
+    }
+
+    translateSubMenuButtonTitle(title) {
+        switch (title) {
+            case 'Crop':
+                return 'Cắt Ảnh';
+            case 'Flip':
+                return 'Lật Ảnh';
+            case 'Rotate':
+                return 'Xoay Ảnh';
+            case 'Draw':
+                return 'Vẽ';
+            case 'Shape':
+                return 'Vẽ Hình Khối';
+            case 'Icon':
+                return 'Vẽ Biểu Tượng';
+            case 'Text':
+                return 'Văn Bản';
+            case 'Mask':
+                return 'Mặt Nạ';
+            case 'Filter':
+                return 'Bộ Lọc Màu';
+            default:
+                return title;
+        }
     }
 
     /**
